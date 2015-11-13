@@ -3,41 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/logging_activity"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.junyu.sensorreadings.LoggingActivity">
 
-    <com.example.junyu.sensorreadings.TapView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/x_linacc_text"
-            android:gravity="center_horizontal"
-            android:text="@string/linacc_readings" />
+        android:text="@string/logging_explanation"
+        android:id="@+id/logging_explanation"
+        android:textAlignment="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/y_linacc_text"
-            android:gravity="center_horizontal"
-            android:text="@string/linacc_readings" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/begin_logging"
+        android:id="@+id/begin_logging"
+        android:layout_below="@+id/logging_explanation"
+        android:layout_centerHorizontal="true"
+        android:onClick="beginLogging"
+        android:textAlignment="center" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/z_linacc_text"
-            android:gravity="center_horizontal"
-            android:text="@string/linacc_readings" />
-    </LinearLayout>
 </RelativeLayout>

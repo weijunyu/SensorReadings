@@ -4,10 +4,14 @@
 
     <string name="help_text">Please select which hand you are using to hold the phone.</string>
 
-    <string name="start_button">Start logging</string>
+    <string name="go_to_logging">Start logging</string>
 
     <string name="left_hand">Left hand</string>
     <string name="right_hand">Right hand</string>
 
-    <string name="linacc_readings">Linear accelerometer sensor readings should be shown here.</string>
+    <string name="logging_explanation">Tap the phone at the location indicated by the red dots as
+        they appear. You may use either hand, but please do not switch your phone-holding hand
+    during logging.</string>
+
+    <string name="begin_logging">Begin!</string>
 </resources>

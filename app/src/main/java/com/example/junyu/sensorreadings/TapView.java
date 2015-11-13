@@ -11,6 +11,9 @@ public class TapView extends View {
     private Paint TapIndicator;
     private Context context;
 
+    public TapView(Context context) {
+        super(context);
+    }
     public TapView(Context context, AttributeSet attrs) {
         super(context,attrs);
         this.context = context;
