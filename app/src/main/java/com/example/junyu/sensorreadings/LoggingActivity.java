@@ -20,19 +20,22 @@ import com.aware.Aware_Preferences;
 import com.aware.LinearAccelerometer;
 import com.aware.providers.Linear_Accelerometer_Provider;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class LoggingActivity extends AppCompatActivity {
     private static final String LOG_TAG = "LoggingActivity";
     private LinAccReceiver linAccReceiver;
     private Intent aware;
+    private String logFileName = "lin_acc_log";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logging);
         Log.d(LOG_TAG, "Started logging activity!");
-
-        startLinAccBroadcast();
-        registerLinAccReceiver();
     }
 
     @Override
@@ -73,6 +76,9 @@ public class LoggingActivity extends AppCompatActivity {
 
         ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity);
         TapView tapView = new TapView(this);
+
+        startLinAccBroadcast();
+        registerLinAccReceiver();
     }
 
     private void startLinAccBroadcast() {
@@ -97,8 +103,9 @@ public class LoggingActivity extends AppCompatActivity {
 
     public class LinAccReceiver extends BroadcastReceiver {
         private final static String LOG_TAG = "LinAccReceiver";
+        private int timeStamp;
         private double xValue, yValue, zValue;
-
+        String logLine;
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(LOG_TAG, "Sensor broadcast received!!!");
@@ -106,10 +113,35 @@ public class LoggingActivity extends AppCompatActivity {
             Object accData = intent.getExtras().get(LinearAccelerometer.EXTRA_DATA);
             ContentValues content = (ContentValues) accData;
             if (content != null) {
+                timeStamp = content.getAsInteger(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.TIMESTAMP);
                 xValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_0);
                 yValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_1);
                 zValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_2);
-                Log.d(LOG_TAG, xValue + " " + yValue + " " + zValue);
+                Log.d(LOG_TAG, "Logging content!");
+
+                logLine = timeStamp + "," + xValue + "," + yValue + "," + zValue;
+                appendLog(logFileName, logLine);
+            }
+        }
+
+        private void appendLog(String logFileName, String logLine) {
+            // Write data to file
+            File linAccLog= new File(logFileName);
+            if (!linAccLog.exists()) {
+                try {
+                    linAccLog.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                // true set to append to log
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(linAccLog, true));
+                bufferedWriter.append(logLine);
+                bufferedWriter.newLine();
+                bufferedWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
