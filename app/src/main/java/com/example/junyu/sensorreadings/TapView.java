@@ -13,6 +13,8 @@ public class TapView extends View {
 
     public TapView(Context context) {
         super(context);
+        this.context = context;
+        init();
     }
     public TapView(Context context, AttributeSet attrs) {
         super(context,attrs);
