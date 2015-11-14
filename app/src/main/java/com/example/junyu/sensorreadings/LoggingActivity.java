@@ -79,14 +79,14 @@ public class LoggingActivity extends AppCompatActivity {
         ((ViewManager) loggingExplanation.getParent()).removeView(loggingExplanation);
         ((ViewManager) beginLogging.getParent()).removeView(beginLogging);
 
+        // Add TapView to layout
+        ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity);
+        TapView tapView = new TapView(this);
+        loggingLayout.addView(tapView);
+
         // Starts the logging
         startLinAccBroadcast();
         registerLinAccReceiver();
-
-        ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity);
-        TapView tapView = new TapView(this);
-
-        loggingLayout.addView(tapView);
     }
 
     private void appendLog(String logFileName, String logLine) {

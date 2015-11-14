@@ -58,4 +58,7 @@ public class TapView extends View {
         TapIndicator.setColor(ContextCompat.getColor(context, R.color.colorAccent));
         TapIndicator.setStyle(Paint.Style.FILL);
     }
+
+    // Have Stimulus or Target (basically drawn objects), implementing Drawables
+    // Have list of Drawables, which can be inserted or deleted from the View
 }
