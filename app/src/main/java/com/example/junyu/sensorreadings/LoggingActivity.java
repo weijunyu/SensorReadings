@@ -87,6 +87,7 @@ public class LoggingActivity extends AppCompatActivity {
         // Starts the logging
         startLinAccBroadcast();
         registerLinAccReceiver();
+
     }
 
     private void appendLog(String logFileName, String logLine) {
@@ -114,32 +115,6 @@ public class LoggingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    public class LinAccReceiver extends BroadcastReceiver {
-        private final static String LOG_TAG = "LinAccReceiver";
-        private int timeStamp;
-        private double xValue, yValue, zValue;
-        String logLine;
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(LOG_TAG, "Sensor broadcast received!!!");
-
-            Object accData = intent.getExtras().get(LinearAccelerometer.EXTRA_DATA);
-            ContentValues content = (ContentValues) accData;
-            if (content != null) {
-                timeStamp = content.getAsInteger(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.TIMESTAMP);
-                xValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_0);
-                yValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_1);
-                zValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_2);
-                Log.d(LOG_TAG, "Logging content!");
-
-                logLine = timeStamp + "," + xValue + "," + yValue + "," + zValue;
-                appendLog(linAccLogFileName, logLine);
-            }
-        }
-    }
-
 
     private void startLinAccBroadcast() {
         // Initialise AWARE
@@ -176,5 +151,30 @@ public class LoggingActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    public class LinAccReceiver extends BroadcastReceiver {
+        private final static String LOG_TAG = "LinAccReceiver";
+        private int timeStamp;
+        private double xValue, yValue, zValue;
+        String logLine;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(LOG_TAG, "Sensor broadcast received!!!");
+
+            Object accData = intent.getExtras().get(LinearAccelerometer.EXTRA_DATA);
+            ContentValues content = (ContentValues) accData;
+            if (content != null) {
+                timeStamp = content.getAsInteger(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.TIMESTAMP);
+                xValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_0);
+                yValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_1);
+                zValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_2);
+                Log.d(LOG_TAG, "Logging content!");
+
+                logLine = timeStamp + "," + xValue + "," + yValue + "," + zValue;
+                appendLog(linAccLogFileName, logLine);
+            }
+        }
     }
 }
