@@ -14,4 +14,6 @@
     during logging.</string>
 
     <string name="begin_logging">Begin!</string>
+
+    <string name="logging_text">Logging...</string>
 </resources>

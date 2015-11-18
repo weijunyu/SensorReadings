@@ -69,29 +69,30 @@ public class LoggingActivity extends AppCompatActivity {
 
     public void beginLogging(View view) {
         /**
-         * 1. Add TapView to layout
+         * 1. Adds TapView to layout
          * 2. TapView starts the animations/drawings
          * 3. endLogging() called, goes back to main activity.
          */
         // Remove text and button
         TextView loggingExplanation = (TextView) this.findViewById(R.id.logging_explanation);
         Button beginLogging = (Button) this.findViewById(R.id.begin_logging);
-        ((ViewManager) loggingExplanation.getParent()).removeView(loggingExplanation);
-        ((ViewManager) beginLogging.getParent()).removeView(beginLogging);
-
-        // Add TapView to layout
-        ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity);
-        TapView tapView = new TapView(this);
-        loggingLayout.addView(tapView);
+        loggingExplanation.setVisibility(View.GONE);
+        beginLogging.setVisibility(View.GONE);
+//        ((ViewManager) loggingExplanation.getParent()).removeView(loggingExplanation);
+//        ((ViewManager) beginLogging.getParent()).removeView(beginLogging);
 
         // Starts the logging
         startLinAccBroadcast();
         registerLinAccReceiver();
 
+        // Add TapView to layout
+        ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity);
+        TapView tapView = new TapView(this);
+        loggingLayout.addView(tapView);
     }
 
     private void appendLog(String logFileName, String logLine) {
-        // !!!Implement checks for ability to write to external storage!
+        // TODO: Implement checks for ability to write to external storage!
         // Write data to file
         final File logDir = new File(Environment.getExternalStorageDirectory() + logDirName);
         boolean success = logDir.mkdirs();
@@ -138,19 +139,13 @@ public class LoggingActivity extends AppCompatActivity {
 
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     public boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
+        return (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
 
     public class LinAccReceiver extends BroadcastReceiver {
