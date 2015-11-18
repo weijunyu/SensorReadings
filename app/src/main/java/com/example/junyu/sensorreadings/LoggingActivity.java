@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.SensorManager;
-import android.os.Environment;
+import android.os.*;
+import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,16 +125,22 @@ public class LoggingActivity extends AppCompatActivity {
         Aware.setSetting(this, Aware_Preferences.STATUS_LINEAR_ACCELEROMETER, true);
         Aware.setSetting(this, Aware_Preferences.FREQUENCY_LINEAR_ACCELEROMETER,
                 SensorManager.SENSOR_DELAY_NORMAL);
-        sendBroadcast(new Intent(Aware.ACTION_AWARE_REFRESH));
+        Aware.startSensor(this, Aware_Preferences.STATUS_LINEAR_ACCELEROMETER);
     }
 
     private void registerLinAccReceiver() {
+        HandlerThread handlerThread = new HandlerThread(
+                "LogWritingThread", Process.THREAD_PRIORITY_BACKGROUND);
+        handlerThread.start();
+        Looper looper = handlerThread.getLooper();
+        Handler loggingHandler = new Handler(looper);
+
         // Create and register a sensorBroadcastReceiver
         linAccReceiver = new LinAccReceiver();
         IntentFilter linAccBroadcastFilter = new IntentFilter();
         // When new data is recorded in provider, grab it
         linAccBroadcastFilter.addAction(LinearAccelerometer.ACTION_AWARE_LINEAR_ACCELEROMETER);
-        registerReceiver(linAccReceiver, linAccBroadcastFilter);
+        registerReceiver(linAccReceiver, linAccBroadcastFilter, null, loggingHandler);
     }
 
     public boolean isExternalStorageWritable() {
