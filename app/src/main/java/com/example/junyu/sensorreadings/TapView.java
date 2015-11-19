@@ -90,7 +90,6 @@ public class TapView extends View {
         int indicatorIndex = indicatorNum - 1;
         int xMargin = indicatorCoords[indicatorIndex][0];
         int yMargin = indicatorCoords[indicatorIndex][1];
-        Log.d(LOG_TAG, "COORDINATES ARE " + String.valueOf(xMargin) + ", " + String.valueOf(yMargin));
         canvas.drawCircle(xMargin, yMargin, indicatorRadius, IndicatorPaint);
 
         View parent = (View) getParent();

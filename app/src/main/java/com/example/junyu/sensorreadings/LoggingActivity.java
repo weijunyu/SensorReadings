@@ -127,8 +127,9 @@ public class LoggingActivity extends AppCompatActivity {
                 yValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_1);
                 zValue = content.getAsDouble(Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_2);
                 Log.d(LOG_TAG, "Logging content!");
-//                TextView sensorValues = (TextView) findViewById(R.id.sensor_values);
-//                sensorValues.setText(xValue + ", " + yValue + ", " + zValue);
+                // This should be correct:
+                // TextView sensorValues = (TextView) LoggingActivity.this.findViewById(R.id.sensor_values);
+                // sensorValues.setText(xValue + ", " + yValue + ", " + zValue);
 
                 logLine = timeStamp + "," + xValue + "," + yValue + "," + zValue;
                 appendLog(linAccLogFileName, logLine);
