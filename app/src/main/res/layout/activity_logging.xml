@@ -30,11 +30,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:id="@+id/hidden_text"
+        android:id="@+id/logging_text"
         android:layout_gravity="center_horizontal"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -42,7 +42,37 @@
         android:layout_height="wrap_content"
         android:id="@+id/logging_progress"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/hidden_text"
-        android:visibility="invisible"/>
+        android:layout_below="@id/logging_text"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/done_text"
+        android:id="@+id/done_text"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/done_button"
+        android:id="@+id/done_button"
+        android:onClick="doneLogging"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/done_text"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sensor_values"
+        android:id="@+id/sensor_values"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

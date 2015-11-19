@@ -7,9 +7,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = "SensorMainActivity";
+    public static final String HAND_SELECT_EXTRA = "com.example.junyu.sensorreadings.HAND_SELECT_EXTRA";
+    public static final String LEFT_HAND = "left hand";
+    public static final String RIGHT_HAND = "right hand";
+    private static String SELECTED_HAND = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startLoggingActivity(View view) {
-        Intent intent = new Intent(this, LoggingActivity.class);
-        startActivity(intent);
+        // Check if button was pressed first
+        RadioButton radioLeftHand = (RadioButton) findViewById(R.id.radio_left_hand);
+        RadioButton radioRightHand = (RadioButton) findViewById(R.id.radio_right_hand);
+        if (radioLeftHand.isChecked() || radioRightHand.isChecked()) {
+            Intent intent = new Intent(this, LoggingActivity.class);
+            intent.putExtra(HAND_SELECT_EXTRA, SELECTED_HAND);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Please select which hand you are using to hold the phone first",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void selectHand(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch (view.getId()) {
+            case R.id.radio_left_hand:
+                if (checked) {
+                    SELECTED_HAND = LEFT_HAND;
+                }
+                break;
+            case R.id.radio_right_hand:
+                if (checked) {
+                    SELECTED_HAND = RIGHT_HAND;
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

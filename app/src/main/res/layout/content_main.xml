@@ -43,12 +43,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/left_hand"
-                    android:id="@+id/left_hand" />
+                    android:id="@+id/radio_left_hand"
+                    android:onClick="selectHand"/>
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/right_hand"
-                    android:text="@string/right_hand" />
+                    android:id="@+id/radio_right_hand"
+                    android:text="@string/right_hand"
+                    android:onClick="selectHand"/>
         </RadioGroup>
 
         <Button

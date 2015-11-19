@@ -4,17 +4,20 @@
     <string name="logging_activity_label">Sensor Data Logging</string>
 
     <string name="help_text">Please select which hand you are using to hold the phone.</string>
-
     <string name="go_to_logging">Start logging</string>
 
     <string name="left_hand">Left hand</string>
     <string name="right_hand">Right hand</string>
 
-    <string name="logging_explanation">Tap the phone at the location indicated by the red dots as
+    <string name="logging_explanation">Tap the phone ONCE at the location indicated by the red dots as
         they appear. You may use either hand, but please do not switch your phone-holding hand
     during logging.</string>
 
     <string name="begin_logging">Begin!</string>
-
     <string name="logging_text">Logging...</string>
+
+    <string name="sensor_values">Sensor values</string>
+
+    <string name="done_text">Logging is now done. Thank you!</string>
+    <string name="done_button">Done</string>
 </resources>
