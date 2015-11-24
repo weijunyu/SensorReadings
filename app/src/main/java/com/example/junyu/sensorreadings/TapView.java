@@ -82,7 +82,8 @@ public class TapView extends View {
             }.execute((Void[]) null);;
         } else {
             canvas.drawColor(Color.WHITE);
-            showEndDialog();
+            LoggingActivity loggingActivity = (LoggingActivity) context;
+            loggingActivity.doneLogging(this);
         }
     }
     
@@ -178,24 +179,4 @@ public class TapView extends View {
             indicatorCoords[4][1] = getHeight() - separation;
         }
     }
-
-    private void showEndDialog() {
-        View parent = (View) getParent();
-        // Remove progress bar and text
-        final ProgressBar progressBar = (ProgressBar) parent.findViewById(R.id.logging_progress);
-        final TextView loggingText = (TextView) parent.findViewById(R.id.logging_text);
-        progressBar.setVisibility(View.GONE);
-        loggingText.setVisibility(View.GONE);
-
-        // show the done button
-        TextView doneText = (TextView) parent.findViewById(R.id.done_text);
-        Button doneButton = (Button) parent.findViewById(R.id.done_button);
-        doneText.bringToFront();
-        doneText.setVisibility(View.VISIBLE);
-        doneButton.bringToFront();
-        doneButton.setVisibility(View.VISIBLE);
-    }
-
-    // Have Stimulus or Target (basically drawn objects), implementing Drawables
-    // Have list of Drawables, which can be inserted or deleted from the View
 }

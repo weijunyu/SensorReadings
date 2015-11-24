@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,10 +94,31 @@ public class LoggingActivity extends AppCompatActivity {
 
     // Callback when logging is complete.
     public void doneLogging(View view) {
-        Log.d(LOG_TAG, "Done logging; unregistering linAccReceiver, stopping aware service");
+        showEndDialog();
+        Log.d(LOG_TAG, "Done logging; unregistering linAccReceiver, " +
+                "stopping aware service and sensors");
         unregisterReceiver(linAccReceiver);
         stopService(aware);
+    }
+
+    public void backToMain(View view) {
         NavUtils.navigateUpFromSameTask(this);
+    }
+
+    private void showEndDialog() {
+        // Remove progress bar and text
+        final ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.logging_progress);
+        final TextView loggingText = (TextView) this.findViewById(R.id.logging_text);
+        progressBar.setVisibility(View.GONE);
+        loggingText.setVisibility(View.GONE);
+
+        // show the done button
+        TextView doneText = (TextView) this.findViewById(R.id.done_text);
+        Button doneButton = (Button) this.findViewById(R.id.done_button);
+        doneText.bringToFront();
+        doneText.setVisibility(View.VISIBLE);
+        doneButton.bringToFront();
+        doneButton.setVisibility(View.VISIBLE);
     }
 
     public boolean isExternalStorageWritable() {
@@ -109,7 +131,6 @@ public class LoggingActivity extends AppCompatActivity {
         return (Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
-
 
     public class LinAccReceiver extends BroadcastReceiver {
         private final static String LOG_TAG = "LinAccReceiver";
