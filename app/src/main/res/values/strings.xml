@@ -14,9 +14,10 @@
     during logging.</string>
 
     <string name="begin_logging">Begin!</string>
-    <string name="logging_text">Logging...</string>
+    <string name="logging_text">Logging&#8230;</string>
 
-    <string name="sensor_values">Sensor values</string>
+    <string name="lin_acc_values">Linear accelerometer values</string>
+    <string name="gyro_values">Gyroscope values</string>
 
     <string name="done_text">Logging is now done. Thank you!</string>
     <string name="done_button">Done</string>

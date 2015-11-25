@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.SensorManager;
 import android.os.*;
 import android.os.Process;
 import android.support.v4.app.NavUtils;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
+import com.aware.Gyroscope;
 import com.aware.LinearAccelerometer;
+import com.aware.providers.Gyroscope_Provider;
 import com.aware.providers.Linear_Accelerometer_Provider;
 
 import java.io.BufferedWriter;
@@ -31,8 +34,10 @@ public class LoggingActivity extends AppCompatActivity {
     private static final String LOG_TAG = "LoggingActivity";
     private static String selectedHand = "";
     private LinAccReceiver linAccReceiver;
+    private GyroReceiver gyroReceiver;
     private Intent aware;
     private String linAccLogFileName = "lin_acc_log";
+    private String gyroLogFilename = "gyro_log";
     private String logDirName = "/SensorReadings/logs";
 
     @Override
@@ -46,6 +51,21 @@ public class LoggingActivity extends AppCompatActivity {
         // TODO: Should check the file directory and set linAccLogFile to a new value
     }
 
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        Log.d(LOG_TAG, "LoggingActivity stopped. Stopped sensors and aware.");
+//        try {
+//            unregisterReceiver(linAccReceiver);
+//            unregisterReceiver(gyroReceiver);
+//            Aware.stopSensor(this, Aware_Preferences.STATUS_LINEAR_ACCELEROMETER);
+//            Aware.stopSensor(this, Aware_Preferences.STATUS_GYROSCOPE);
+//            stopService(aware);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     public void beginLogging(View view) {
         /**
          * 1. Adds TapView to layout
@@ -57,9 +77,14 @@ public class LoggingActivity extends AppCompatActivity {
         loggingExplanation.setVisibility(View.GONE);
         beginLogging.setVisibility(View.GONE);
 
+        // Initialise AWARE
+        aware = new Intent(this, Aware.class);
+        startService(aware);
         // Starts the logging
         startLinAccBroadcast();
         registerLinAccReceiver();
+        startGyroBroadcast();
+        registerGyroReceiver();
 
         // Add TapView to layout
         ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity);
@@ -68,28 +93,34 @@ public class LoggingActivity extends AppCompatActivity {
     }
 
     private void startLinAccBroadcast() {
-        // Initialise AWARE
-        aware = new Intent(this, Aware.class);
-        startService(aware);
         // Activate sensors, set settings.
         Aware.setSetting(this, Aware_Preferences.STATUS_LINEAR_ACCELEROMETER, true);
-        Aware.setSetting(this, Aware_Preferences.FREQUENCY_LINEAR_ACCELEROMETER, 200000);
+        Aware.setSetting(this, Aware_Preferences.FREQUENCY_LINEAR_ACCELEROMETER, SensorManager.SENSOR_DELAY_NORMAL);
         Aware.startSensor(this, Aware_Preferences.STATUS_LINEAR_ACCELEROMETER);
     }
 
-    private void registerLinAccReceiver() {
-        HandlerThread handlerThread = new HandlerThread(
-                "LogWritingThread", Process.THREAD_PRIORITY_BACKGROUND);
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
-        Handler loggingHandler = new Handler(looper);
+    private void startGyroBroadcast() {
+        Aware.setSetting(this, Aware_Preferences.STATUS_GYROSCOPE, true);
+        Aware.setSetting(this, Aware_Preferences.FREQUENCY_GYROSCOPE, SensorManager.SENSOR_DELAY_NORMAL);
+        Aware.startSensor(this, Aware_Preferences.STATUS_GYROSCOPE);
+    }
 
+    private void registerLinAccReceiver() {
         // Create and register a sensorBroadcastReceiver
         linAccReceiver = new LinAccReceiver();
         IntentFilter linAccBroadcastFilter = new IntentFilter();
         // When new data is recorded in provider, grab it
         linAccBroadcastFilter.addAction(LinearAccelerometer.ACTION_AWARE_LINEAR_ACCELEROMETER);
-        registerReceiver(linAccReceiver, linAccBroadcastFilter, null, loggingHandler);
+        registerReceiver(linAccReceiver, linAccBroadcastFilter);
+    }
+
+    private void registerGyroReceiver() {
+        // Create and register a sensorBroadcastReceiver
+        gyroReceiver = new GyroReceiver();
+        IntentFilter gyroBroadcastFilter = new IntentFilter();
+        // When new data is recorded in provider, grab it
+        gyroBroadcastFilter.addAction(Gyroscope.ACTION_AWARE_GYROSCOPE);
+        registerReceiver(gyroReceiver, gyroBroadcastFilter);
     }
 
     // Callback when logging is complete.
@@ -98,6 +129,7 @@ public class LoggingActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Done logging; unregistering linAccReceiver, " +
                 "stopping aware service and sensors");
         unregisterReceiver(linAccReceiver);
+        unregisterReceiver(gyroReceiver);
         stopService(aware);
     }
 
@@ -185,6 +217,32 @@ public class LoggingActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Could not write to log file", Toast.LENGTH_SHORT).show();
             NavUtils.navigateUpFromSameTask(this);
+        }
+    }
+
+    public class GyroReceiver extends BroadcastReceiver {
+        private final static String LOG_TAG = "GyroReceiver";
+        private int timeStamp;
+        private double xValue, yValue, zValue;
+        String logLine;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Object gyroData = intent.getExtras().get(Gyroscope.EXTRA_DATA);
+            ContentValues content = (ContentValues) gyroData;
+            if (content != null) {
+                timeStamp = content.getAsInteger(Gyroscope_Provider.Gyroscope_Data.TIMESTAMP);
+                xValue = content.getAsDouble(Gyroscope_Provider.Gyroscope_Data.VALUES_0);
+                yValue = content.getAsDouble(Gyroscope_Provider.Gyroscope_Data.VALUES_1);
+                zValue = content.getAsDouble(Gyroscope_Provider.Gyroscope_Data.VALUES_2);
+                Log.d(LOG_TAG, "Logging gyroscope content!");
+                // This should be correct:
+                // TextView sensorValues = (TextView) LoggingActivity.this.findViewById(R.id.gyro_values);
+                // sensorValues.setText(xValue + ", " + yValue + ", " + zValue);
+
+                logLine = timeStamp + "," + xValue + "," + yValue + "," + zValue;
+                appendLog(gyroLogFilename, logLine);
+            }
         }
     }
 }

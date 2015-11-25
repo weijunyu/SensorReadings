@@ -72,15 +72,24 @@
         android:layout_centerHorizontal="true"
         android:visibility="gone"/>
 
-    <!-- Secret TextView that displays sensor information, real time -->
+    <!-- Hidden TextView that displays sensor information, real time -->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sensor_values"
-        android:id="@+id/sensor_values"
+        android:text="@string/lin_acc_values"
+        android:id="@+id/lin_acc_values"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gyro_values"
+        android:id="@+id/gyro_values"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/lin_acc_values"
         android:visibility="gone"/>
 
 </RelativeLayout>
