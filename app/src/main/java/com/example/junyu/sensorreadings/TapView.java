@@ -8,9 +8,7 @@ import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,7 +19,7 @@ public class TapView extends View {
     private String selectedHand;
     private int indicatorRadius = 60;
     private int separation = 70;
-    private int sampleTime = 3000; // 3000ms, or 3s.
+    private int sampleTime = 2000; // 2000ms, or 2s.
     private int sampleInterval = sampleTime / 100;
     private int indicatorNum = 1;
     private int[][] indicatorCoords = new int[5][2];
@@ -34,10 +32,9 @@ public class TapView extends View {
         init();
     }
 
-    public TapView(Context context, String selectedHand, AttributeSet attrs) {
+    public TapView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        this.selectedHand = selectedHand;
         init();
     }
 
@@ -83,7 +80,8 @@ public class TapView extends View {
         } else {
             canvas.drawColor(Color.WHITE);
             LoggingActivity loggingActivity = (LoggingActivity) context;
-            loggingActivity.doneLogging(this);
+            loggingActivity.showEndDialog();
+            loggingActivity.stopLogging();
         }
     }
     
