@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private static final String LOG_TAG = "SensorMainActivity";
     public static final String HAND_SELECT_EXTRA = "com.example.junyu.sensorreadings.HAND_SELECT_EXTRA";
     public static final String LEFT_HAND = "left hand";
@@ -23,11 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
@@ -54,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         RadioButton radioLeftHand = (RadioButton) findViewById(R.id.radio_left_hand);
         RadioButton radioRightHand = (RadioButton) findViewById(R.id.radio_right_hand);
         if (radioLeftHand.isChecked() || radioRightHand.isChecked()) {
-            Intent intent = new Intent(this, LoggingActivity.class);
+            Intent intent = new Intent(this, LoggingActivity5p.class);
             intent.putExtra(HAND_SELECT_EXTRA, SELECTED_HAND);
             startActivity(intent);
         } else {

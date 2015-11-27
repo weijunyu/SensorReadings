@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/logging_activity"
+    android:id="@+id/logging_activity_5p"
     android:orientation="vertical"
     tools:context="com.example.junyu.sensorreadings.LoggingActivity">
 
     <!-- Instructions and begin button -->
 
+    <!-- gravity attribute describe things inside -->
+    <!-- layout_{attribute} describes item within its parent -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +68,6 @@
         android:text="@string/done_button"
         android:id="@+id/done_button"
         android:onClick="backToMain"
-        android:layout_gravity="center_horizontal"
         android:layout_below="@+id/done_text"
         android:layout_centerHorizontal="true"
         android:visibility="gone"/>

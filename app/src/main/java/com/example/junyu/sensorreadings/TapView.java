@@ -79,7 +79,7 @@ public class TapView extends View {
             }.execute((Void[]) null);;
         } else {
             canvas.drawColor(Color.WHITE);
-            LoggingActivity loggingActivity = (LoggingActivity) context;
+            LoggingActivity5p loggingActivity = (LoggingActivity5p) context;
             loggingActivity.showEndDialog();
             loggingActivity.stopLogging();
         }

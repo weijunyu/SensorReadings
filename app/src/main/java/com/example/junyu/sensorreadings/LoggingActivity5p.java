@@ -38,20 +38,18 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class LoggingActivity extends AppCompatActivity {
-    private static final String LOG_TAG = "LoggingActivity";
+public class LoggingActivity5p extends AppCompatActivity {
+    private static final String LOG_TAG = "LoggingActivity5p";
     private static String selectedHand = "";
-    private LinAccReceiver linAccReceiver;
-    private GyroReceiver gyroReceiver;
     private Intent aware;
 
-    File linAccLogDir;
-    File gyroLogDir;
-    private String logDirName = "/SensorReadings/logs";
+    private File linAccLogDir;
+    private File gyroLogDir;
+    private String logDirName = "/SensorReadings/logs/5_point";
     private String linAccDirName = "/lin_acc";
     private String gyroDirName = "/gyro";
-    private String linAccLogFileName = "";
-    private String gyroLogFilename = "";
+    private String linAccLogFileName;
+    private String gyroLogFilename;
 
     private SensorManager sensorManager;
     private SensorEventListener sensorListener;
@@ -147,7 +145,7 @@ public class LoggingActivity extends AppCompatActivity {
         startListening();
 
         // Add TapView to layout
-        ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity);
+        ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity_5p);
         TapView tapView = new TapView(this, selectedHand);
         loggingLayout.addView(tapView);
     }
@@ -299,7 +297,7 @@ public class LoggingActivity extends AppCompatActivity {
 
     private void registerLinAccReceiver() {
         // Create and register a sensorBroadcastReceiver
-        linAccReceiver = new LinAccReceiver();
+        LinAccReceiver linAccReceiver = new LinAccReceiver();
         IntentFilter linAccBroadcastFilter = new IntentFilter();
         // When new data is recorded in provider, grab it
         linAccBroadcastFilter.addAction(LinearAccelerometer.ACTION_AWARE_LINEAR_ACCELEROMETER);
@@ -308,7 +306,7 @@ public class LoggingActivity extends AppCompatActivity {
 
     private void registerGyroReceiver() {
         // Create and register a sensorBroadcastReceiver
-        gyroReceiver = new GyroReceiver();
+        GyroReceiver gyroReceiver  = new GyroReceiver();
         IntentFilter gyroBroadcastFilter = new IntentFilter();
         // When new data is recorded in provider, grab it
         gyroBroadcastFilter.addAction(Gyroscope.ACTION_AWARE_GYROSCOPE);
@@ -334,7 +332,7 @@ public class LoggingActivity extends AppCompatActivity {
                         Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_2);
                 Log.d(LOG_TAG, "Logging linear accelerometer content!");
                 // This should be correct:
-                // TextView sensorValues = (TextView) LoggingActivity.this.findViewById(R.id.sensor_values);
+                // TextView sensorValues = (TextView) LoggingActivity5p.this.findViewById(R.id.sensor_values);
                 // sensorValues.setText(xValue + ", " + yValue + ", " + zValue);
 
                 String logLine = label + "," + timeStamp + "," +
@@ -359,7 +357,7 @@ public class LoggingActivity extends AppCompatActivity {
                 double zValue = content.getAsDouble(Gyroscope_Provider.Gyroscope_Data.VALUES_2);
                 Log.d(LOG_TAG, "Logging gyroscope content!");
                 // This should be correct:
-                // TextView sensorValues = (TextView) LoggingActivity.this.findViewById(R.id.gyro_values);
+                // TextView sensorValues = (TextView) LoggingActivity5p.this.findViewById(R.id.gyro_values);
                 // sensorValues.setText(xValue + ", " + yValue + ", " + zValue);
 
                 String logLine = label + "," + timeStamp + ","  +
