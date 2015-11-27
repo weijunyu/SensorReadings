@@ -210,10 +210,10 @@ public class LoggingActivity extends AppCompatActivity {
         sensorManager.registerListener(sensorListener, gyroscope, SensorManager.SENSOR_DELAY_GAME);
     }
 
-    private void appendLog(String logLine, int type) {
+    private void appendLog(String logLine, int sensorType) {
 
         if (isExternalStorageWritable()) {
-            if (type == Sensor.TYPE_LINEAR_ACCELERATION) {
+            if (sensorType == Sensor.TYPE_LINEAR_ACCELERATION) {
                 File logFile = new File(linAccLogDir, linAccLogFileName);
 
                 try {
@@ -227,7 +227,7 @@ public class LoggingActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if (type == Sensor.TYPE_GYROSCOPE) {
+            } else if (sensorType == Sensor.TYPE_GYROSCOPE) {
                 File logFile = new File(gyroLogDir, gyroLogFilename);
 
                 try {
@@ -248,15 +248,39 @@ public class LoggingActivity extends AppCompatActivity {
         }
     }
 
+    public void showEndDialog() {
+        // Remove progress bar and text
+        ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.logging_progress);
+        TextView loggingText = (TextView) this.findViewById(R.id.logging_text);
+        progressBar.setVisibility(View.GONE);
+        loggingText.setVisibility(View.GONE);
+
+        Log.d(LOG_TAG, "Setting done text and button");
+        // show the done button
+        TextView doneText = (TextView) this.findViewById(R.id.done_text);
+        Button doneButton = (Button) this.findViewById(R.id.done_button);
+        doneText.bringToFront();
+        doneText.setVisibility(View.VISIBLE);
+        doneButton.bringToFront();
+        doneButton.setVisibility(View.VISIBLE);
+    }
+
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        return (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
 
     public void backToMain(View view) {
         NavUtils.navigateUpFromSameTask(this);
     }
 
+/////////////////////////////////////////AWARE Things///////////////////////////////////////////////
     private void startLinAccBroadcast() {
         // Activate sensors, set settings.
         Aware.setSetting(this, Aware_Preferences.STATUS_LINEAR_ACCELEROMETER, true);
@@ -288,28 +312,6 @@ public class LoggingActivity extends AppCompatActivity {
         // When new data is recorded in provider, grab it
         gyroBroadcastFilter.addAction(Gyroscope.ACTION_AWARE_GYROSCOPE);
         registerReceiver(gyroReceiver, gyroBroadcastFilter);
-    }
-
-    public void showEndDialog() {
-        // Remove progress bar and text
-        final ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.logging_progress);
-        final TextView loggingText = (TextView) this.findViewById(R.id.logging_text);
-        progressBar.setVisibility(View.GONE);
-        loggingText.setVisibility(View.GONE);
-
-        // show the done button
-        TextView doneText = (TextView) this.findViewById(R.id.done_text);
-        Button doneButton = (Button) this.findViewById(R.id.done_button);
-        doneText.bringToFront();
-        doneText.setVisibility(View.VISIBLE);
-        doneButton.bringToFront();
-        doneButton.setVisibility(View.VISIBLE);
-    }
-
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        return (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
 
     public class LinAccReceiver extends BroadcastReceiver {
