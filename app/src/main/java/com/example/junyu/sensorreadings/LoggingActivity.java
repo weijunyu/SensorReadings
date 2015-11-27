@@ -108,12 +108,13 @@ public class LoggingActivity extends AppCompatActivity {
                 gyroLogFilename = linAccLogFileName;
             } else {
                 // Get the last log number
-                List<Integer> logNames = new ArrayList<>();
-                for (int i = 0; i < logFiles.length; i++) {
-                    String fileName = logFiles[i].getName();
-                    logNames.add(Integer.valueOf(fileName));
+                List<Integer> fileNames = new ArrayList<>();
+                for(File file:logFiles) {
+                    // for each
+                    String fileName = file.getName();
+                    fileNames.add(Integer.valueOf(fileName));
                 }
-                logNum = Collections.max(logNames) + 1;
+                logNum = Collections.max(fileNames) + 1;
                 linAccLogFileName = Integer.toString(logNum);
                 gyroLogFilename = linAccLogFileName;
             }
