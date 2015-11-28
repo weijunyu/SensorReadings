@@ -1,91 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        android:id="@+id/toolbar"
-        android:elevation="4dp"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <!-- Layout of the content -->
+    <include layout="@layout/content_main" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/front_page_layout"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
+    <!-- Listview for side drawer -->
+    <ListView
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_drawer"
+        android:background="@android:color/white"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/help_text"
-            android:id="@+id/help_text"
-            android:textAlignment="center"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/left_hand"
-                android:id="@+id/radio_left_hand"
-                android:onClick="selectHand"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radio_right_hand"
-                android:text="@string/right_hand"
-                android:onClick="selectHand"/>
-        </RadioGroup>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/go_to_logging"
-            android:id="@+id/go_to_logging"
-            android:layout_gravity="center_horizontal"
-            android:onClick="startLoggingActivity"/>
-    </LinearLayout>
-
-</LinearLayout>
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<android.support.v4.widget.DrawerLayout-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:id="@+id/drawer_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:fitsSystemWindows="true"-->
-    <!--tools:context=".MainActivity">-->
-
-    <!--&lt;!&ndash; Layout of the content &ndash;&gt;-->
-    <!--<include layout="@layout/content_main" />-->
-
-    <!--&lt;!&ndash; Listview for side drawer &ndash;&gt;-->
-    <!--<ListView-->
-        <!--android:layout_width="240dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/nav_drawer"-->
-        <!--android:background="@android:color/white"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:choiceMode="singleChoice" />-->
-
-<!--</android.support.v4.widget.DrawerLayout>-->
+</android.support.v4.widget.DrawerLayout>

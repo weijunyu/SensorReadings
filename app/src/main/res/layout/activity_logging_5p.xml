@@ -3,47 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/logging_activity"
+    android:id="@+id/logging_activity_5p"
     android:orientation="vertical"
-    tools:context="com.example.junyu.sensorreadings.LoggingActivity">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/select_hand_layout"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_above="@+id/logging_explanation">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/help_text"
-            android:id="@+id/help_text"
-            android:gravity="center_horizontal"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/left_hand"
-                android:id="@+id/radio_left_hand"
-                android:onClick="selectHand"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radio_right_hand"
-                android:text="@string/right_hand"
-                android:onClick="selectHand"/>
-        </RadioGroup>
-
-    </LinearLayout>
+    tools:context="com.example.junyu.sensorreadings.LoggingActivity5p">
 
     <!-- Instructions and begin button -->
 

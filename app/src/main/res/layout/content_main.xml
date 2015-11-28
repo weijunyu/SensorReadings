@@ -16,50 +16,36 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/introduction"
+        android:id="@+id/introduction"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal" />
+
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/front_page_layout"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/help_text"
-            android:id="@+id/help_text"
-            android:textAlignment="center"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/left_hand"
-                    android:id="@+id/radio_left_hand"
-                    android:onClick="selectHand"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radio_right_hand"
-                    android:text="@string/right_hand"
-                    android:onClick="selectHand"/>
-        </RadioGroup>
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/go_to_logging"
-            android:id="@+id/go_to_logging"
-            android:layout_gravity="center_horizontal"
-            android:onClick="startLoggingActivity"/>
+            android:text="@string/start_logging_5p"
+            android:id="@+id/start_logging_5p"
+            android:onClick="startLoggingActivity5P"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_logging_2p"
+            android:id="@+id/start_logging_2p"
+            android:onClick="startLoggingActivity2P"/>
     </LinearLayout>
+
 
 </LinearLayout>

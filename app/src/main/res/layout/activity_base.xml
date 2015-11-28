@@ -8,12 +8,9 @@
     android:fitsSystemWindows="true"
     tools:context=".BaseActivity">
 
-    <!-- Layout of the content -->
-    <include layout="@layout/activity_main" />
-
     <!-- Listview for side drawer -->
     <ListView
-        android:layout_width="240dp"
+        android:layout_width="260dp"
         android:layout_height="match_parent"
         android:id="@+id/nav_drawer"
         android:background="@android:color/white"

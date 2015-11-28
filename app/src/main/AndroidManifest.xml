@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:icon, android:theme">
+
         <activity
             android:name=".MainActivity"
             android:label="@string/main_activity_name">
@@ -24,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoggingActivity5p"
+            android:name=".LoggingActivity5P"
             android:label="@string/logging_activity_5p_name"
             android:parentActivityName=".MainActivity">
 
@@ -33,6 +34,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.junyu.sensorreadings.MainActivity" />
         </activity>
+        <activity
+            android:name=".LoggingActivity2P"
+            android:label="@string/logging_activity_2p_name"
+            android:parentActivityName=".MainActivity">
+
+        <!-- meta-data to support parent activity behaviour for API level 15 -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.junyu.sensorreadings.MainActivity" />
+        </activity>
+        <activity android:name=".BaseActivity" />
 
         <!-- <provider -->
         <!-- android:name="com.aware.providers.Scheduler_Provider" -->
@@ -68,8 +80,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".LoggingActivity2p" />
-        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>
