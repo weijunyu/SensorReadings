@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoggingActivity5P"
+            android:name=".LoggingActivity5p"
             android:label="@string/logging_activity_5p_name"
             android:parentActivityName=".MainActivity">
 
