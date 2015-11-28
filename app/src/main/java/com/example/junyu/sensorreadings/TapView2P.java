@@ -15,7 +15,6 @@ import android.widget.TextView;
 public class TapView2P extends View {
     private final static String LOG_TAG = "TapView2P";
     private Paint IndicatorPaint;
-    private Context context;
     private int numOfIndicators = 2;
     private int indicatorRadius = 60;
     private int separation = 70;
@@ -29,13 +28,11 @@ public class TapView2P extends View {
 
     public TapView2P(Context context) {
         super(context);
-//        this.context = context;
         init();
     }
 
     public TapView2P(Context context, AttributeSet attrs) {
         super(context, attrs);
-//        this.context = context;
         init();
     }
 
@@ -96,7 +93,6 @@ public class TapView2P extends View {
         } else {
             canvas.drawColor(Color.WHITE);
             LoggingActivity parentActivity = (LoggingActivity) this.getContext();
-//            LoggingActivity2P loggingActivity = (LoggingActivity2P) context;
             parentActivity.showEndDialog();
             parentActivity.stopLogging();
         }

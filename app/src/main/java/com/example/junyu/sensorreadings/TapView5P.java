@@ -16,7 +16,6 @@ import android.widget.TextView;
 public class TapView5P extends View {
     private final static String LOG_TAG = "TapView5P";
     private Paint IndicatorPaint;
-    private Context context;
     private String selectedHand;
     private int numOfIndicators = 5;
     private int indicatorRadius = 60;
@@ -31,20 +30,18 @@ public class TapView5P extends View {
 
     public TapView5P(Context context, String selectedHand) {
         super(context);
-        this.context = context;
         this.selectedHand = selectedHand;
         init();
     }
 
     public TapView5P(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
         init();
     }
 
     private void init() {
         IndicatorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        IndicatorPaint.setColor(ContextCompat.getColor(context, R.color.colorAccent));
+        IndicatorPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         IndicatorPaint.setStyle(Paint.Style.FILL);
     }
 
@@ -98,9 +95,9 @@ public class TapView5P extends View {
             }.execute((Void[]) null);
         } else {
             canvas.drawColor(Color.WHITE);
-            LoggingActivity5P loggingActivity = (LoggingActivity5P) context;
-            loggingActivity.showEndDialog();
-            loggingActivity.stopLogging();
+            LoggingActivity parentActivity = (LoggingActivity) this.getContext();
+            parentActivity.showEndDialog();
+            parentActivity.stopLogging();
         }
     }
     
