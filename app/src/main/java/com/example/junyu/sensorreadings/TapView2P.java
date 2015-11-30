@@ -58,6 +58,8 @@ public class TapView2P extends View {
         loggingText.setText(R.string.logging_text);
 
         if (!doneLogging) {
+            LoggingActivity parentActivity = (LoggingActivity) this.getContext();
+            parentActivity.setIndicatorNum(indicatorNum);
             flashIndicator(canvas, indicatorNum);
 
             new AsyncTask<Void, Void, Void>() {
@@ -152,9 +154,9 @@ public class TapView2P extends View {
      indicatorCoords[6][1] = getHeight() - separation;
      */
     private void setCoordinates() {
-        // point 4
+        // point 1
         indicatorCoords[0][0] = separation;
-        indicatorCoords[0][1] = getHeight() / 2;
+        indicatorCoords[0][1] = separation;
         // point 5
         indicatorCoords[1][0] = getWidth() - separation;
         indicatorCoords[1][1] = getHeight() / 2;

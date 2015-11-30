@@ -61,6 +61,8 @@ public class TapView5P extends View {
         loggingText.setText(R.string.logging_text);
 
         if (!doneLogging) {
+            LoggingActivity parentActivity = (LoggingActivity) this.getContext();
+            parentActivity.setIndicatorNum(indicatorNum);
             flashIndicator(canvas, indicatorNum);
 
             new AsyncTask<Void, Void, Void>() {

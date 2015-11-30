@@ -47,11 +47,11 @@ public class LoggingActivity5P extends LoggingActivity {
         if (isExternalStorageWritable()) {
             int logNum;
             File logDir = new File(
-                    Environment.getExternalStorageDirectory() + mainLogDir + "/5_points");
-            // '/storage/emulated/0' + '/SensorReadings/logs'
+                    Environment.getExternalStorageDirectory() +
+                            mainLogDir + "/5_points");
+            // eg: '/storage/emulated/0' + '/SensorReadings/logs' + '/5_points'
             linAccLogDir = new File(logDir + linAccDirName);
             gyroLogDir = new File(logDir + gyroDirName);
-            // '/storage/emulated/0' + '/SensorReadings/logs' + '/gyro'
 
             boolean[] success = {
                     logDir.mkdirs(),
@@ -90,7 +90,6 @@ public class LoggingActivity5P extends LoggingActivity {
     }
 
     public void beginLogging(View view) {
-
         if (checkHandSelected()) {
             hideHandSelection();
             hideExplanationAndButton();
@@ -115,47 +114,5 @@ public class LoggingActivity5P extends LoggingActivity {
             Toast.makeText(this, "Please select which hand you are using to hold the phone first",
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-    protected void startListening() {
-        // Initialise sensors
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Sensor linearAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        Sensor gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-
-        sensorListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                Sensor sensor = event.sensor;
-                if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-                    String label = "linear_accelerometer";
-                    double xValue = event.values[0];
-                    double yValue = event.values[1];
-                    double zValue = event.values[2];
-                    Calendar calendar = new GregorianCalendar();
-                    long timeStamp = calendar.getTimeInMillis();
-                    String logLine = label + "," + timeStamp + "," +
-                            xValue + "," + yValue + "," + zValue;
-                    appendLog(logLine, Sensor.TYPE_LINEAR_ACCELERATION);
-                } else if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-                    String label = "gyroscope";
-                    double xValue = event.values[0];
-                    double yValue = event.values[1];
-                    double zValue = event.values[2];
-                    Calendar calendar = new GregorianCalendar();
-                    long timeStamp = calendar.getTimeInMillis();
-                    String logLine = label + "," + timeStamp + "," +
-                            xValue + "," + yValue + "," + zValue;
-                    appendLog(logLine, Sensor.TYPE_GYROSCOPE);
-                }
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-            }
-        };
-        sensorManager.registerListener(sensorListener, linearAccelerometer, SensorManager.SENSOR_DELAY_GAME);
-        sensorManager.registerListener(sensorListener, gyroscope, SensorManager.SENSOR_DELAY_GAME);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Environment;
@@ -31,11 +32,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public abstract class LoggingActivity extends AppCompatActivity {
     private static String LOG_TAG = "LoggingActivity(Base)";
-    protected static final String LEFT_HAND = "left hand";
-    protected static final String RIGHT_HAND = "right hand";
+    protected static final String LEFT_HAND = "left_hand";
+    protected static final String RIGHT_HAND = "right_hand";
     protected String selectedHand;
 //    private Intent aware;
 
@@ -50,6 +53,11 @@ public abstract class LoggingActivity extends AppCompatActivity {
     protected SensorManager sensorManager;
     protected SensorEventListener sensorListener;
 
+    protected int indicatorNum;
+
+    /**
+     * Sets the name of the log file, runs in onStart()
+     */
     abstract void setLogNumber();
 
     /**
@@ -58,7 +66,10 @@ public abstract class LoggingActivity extends AppCompatActivity {
      */
     abstract void beginLogging(View view);
 
-    abstract void startListening();
+    /**
+     * Creates sensor listeners that write to the log file upon changes in sensor values
+     */
+//    abstract void startListening();
 
     public void selectHand(View view) {
         boolean checked = ((RadioButton) view).isChecked();
@@ -100,6 +111,48 @@ public abstract class LoggingActivity extends AppCompatActivity {
         beginLogging.setVisibility(View.GONE);
     }
 
+    protected void startListening() {
+        // Initialise sensors
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor linearAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        Sensor gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+
+        sensorListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                Sensor sensor = event.sensor;
+                if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+                    String hand = selectedHand;
+                    double xValue = event.values[0];
+                    double yValue = event.values[1];
+                    double zValue = event.values[2];
+                    Calendar calendar = new GregorianCalendar();
+                    long timeStamp = calendar.getTimeInMillis();
+                    String logLine = hand + "," + timeStamp + "," + indicatorNum + "," +
+                            xValue + "," + yValue + "," + zValue;
+                    appendLog(logLine, Sensor.TYPE_LINEAR_ACCELERATION);
+                } else if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+                    String hand = selectedHand;
+                    double xValue = event.values[0];
+                    double yValue = event.values[1];
+                    double zValue = event.values[2];
+                    Calendar calendar = new GregorianCalendar();
+                    long timeStamp = calendar.getTimeInMillis();
+                    String logLine = hand + "," + timeStamp + "," + indicatorNum + "," +
+                            xValue + "," + yValue + "," + zValue;
+                    appendLog(logLine, Sensor.TYPE_GYROSCOPE);
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        };
+        sensorManager.registerListener(sensorListener, linearAccelerometer, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(sensorListener, gyroscope, SensorManager.SENSOR_DELAY_GAME);
+    }
+
     protected void appendLog(String logLine, int sensorType) {
         if (isExternalStorageWritable()) {
             if (sensorType == Sensor.TYPE_LINEAR_ACCELERATION) {
@@ -133,7 +186,13 @@ public abstract class LoggingActivity extends AppCompatActivity {
         }
     }
 
-    // Callback when logging is complete.
+    public void setIndicatorNum(int indicatorNum) {
+        this.indicatorNum = indicatorNum;
+    }
+
+    /**
+     * Unregisters sensors when logging is complete, or activity ends.
+     */
     public void stopLogging() {
         if (sensorListener != null) {
             sensorManager.unregisterListener(sensorListener);
