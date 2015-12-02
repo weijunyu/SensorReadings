@@ -24,12 +24,6 @@ public class LoggingActivity5P extends LoggingActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        setLogNumber();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         stopLogging();
@@ -39,9 +33,10 @@ public class LoggingActivity5P extends LoggingActivity {
         // Find the linear accelerometer directory
         if (isExternalStorageWritable()) {
             int logNum;
+            String handDir = "/" + selectedHand; // eg '/left_hand'
             File logDir = new File(
                     Environment.getExternalStorageDirectory() +
-                            mainLogDir + "/5_points");
+                            mainLogDir + "/5_points" + handDir);
             // eg: '/storage/emulated/0' + '/SensorReadings/logs' + '/5_points'
             linAccLogDir = new File(logDir + linAccDirName);
             gyroLogDir = new File(logDir + gyroDirName);
@@ -96,7 +91,7 @@ public class LoggingActivity5P extends LoggingActivity {
 //        registerLinAccReceiver();
 //        startGyroBroadcast();
 //        registerGyroReceiver();
-
+            setLogNumber();
             startListening();
 
             // Add TapView to layout

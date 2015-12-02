@@ -14,6 +14,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -61,9 +62,9 @@ public abstract class LoggingActivity extends AppCompatActivity {
     abstract void setLogNumber();
 
     /**
-     * 1. Adds TapView to layout
-     * 2. TapView starts the animations/drawings
+     * Checks if hand is selected, then erases the views and starts TapView, which draws tap points
      */
+
     abstract void beginLogging(View view);
 
     /**
@@ -196,7 +197,7 @@ public abstract class LoggingActivity extends AppCompatActivity {
     public void stopLogging() {
         if (sensorListener != null) {
             sensorManager.unregisterListener(sensorListener);
-        };
+        }
 //        try {
 //            Aware.stopSensor(this, Aware_Preferences.STATUS_LINEAR_ACCELEROMETER);
 //            Aware.stopSensor(this, Aware_Preferences.STATUS_GYROSCOPE);

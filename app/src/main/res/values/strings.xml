@@ -12,6 +12,7 @@
     </string>
     <string name="start_logging_5p">5 Tap points</string>
     <string name="start_logging_2p">2 Tap points</string>
+    <string name="continuous_mode_text">Continuous mode</string>
 
     <string name="help_text">Please select the hand you are using to hold the device. Important
     note: once the data collection starts, please ensure that you do not switch from the selected

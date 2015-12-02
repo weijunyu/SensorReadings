@@ -15,19 +15,21 @@ import android.widget.TextView;
 public class TapView2P extends View {
     private final static String LOG_TAG = "TapView2P";
     private Paint IndicatorPaint;
+    private String selectedHand;
     private int numOfIndicators = 2;
     private int indicatorRadius = 60;
     private int separation = 70;
     private int sampleTime = 2000; // 2000ms, or 2s.
     private int sampleInterval = sampleTime / 100;
     private int maxRuns = 3;
-    private int[][] indicatorCoords = new int[5][2];
+    private int[][] indicatorCoords = new int[2][2];
     private int indicatorNum = 1;
     private int run = 1;
     private boolean doneLogging = false;
 
-    public TapView2P(Context context) {
+    public TapView2P(Context context, String selectedHand) {
         super(context);
+        this.selectedHand = selectedHand;
         init();
     }
 
@@ -49,7 +51,7 @@ public class TapView2P extends View {
 
     private void drawPoints(Canvas canvas) {
         // Set coordinates of indicators, depending on hand used. Needs to be called in here!
-        setCoordinates();
+        setCoordinates(selectedHand);
         // Show "logging..." text
         View parent = (View) getParent();
         TextView loggingText = (TextView) parent.findViewById(R.id.logging_text);
@@ -129,36 +131,45 @@ public class TapView2P extends View {
     }
 
     /**
-     Locations of the 7 tap points on the display. Points are numbered 1-7, and go left-right,
-     top-down. First array element is x position, second element is y position.
-     point 1:
-     indicatorCoords[0][0] = separation;
-     indicatorCoords[0][1] = separation;
-     point 2:
-     indicatorCoords[1][0] = getWidth() / 2;
-     indicatorCoords[1][1] = separation;
-     point 3:
-     indicatorCoords[2][0] = getWidth() - separation;
-     indicatorCoords[2][1] = separation;
-     point 4:
-     indicatorCoords[3][0] = separation;
-     indicatorCoords[3][1] = getHeight() / 2;
-     point 5:
-     indicatorCoords[4][0] = getWidth() - separation;
-     indicatorCoords[4][1] = getHeight() / 2;
-     point 6:
-     indicatorCoords[5][0] = separation;
-     indicatorCoords[5][1] = getHeight() - separation;
-     point 7:
-     indicatorCoords[6][0] = getWidth() - separation;
-     indicatorCoords[6][1] = getHeight() - separation;
+     * Locations of the 7 tap points on the display. Points are numbered 1-7, and go left-right,
+     * top-down. First array element is x position, second element is y position.
+     * point 1:
+     * indicatorCoords[0][0] = separation;
+     * indicatorCoords[0][1] = separation;
+     * point 2:
+     * indicatorCoords[1][0] = getWidth() / 2;
+     * indicatorCoords[1][1] = separation;
+     * point 3:
+     * indicatorCoords[2][0] = getWidth() - separation;
+     * indicatorCoords[2][1] = separation;
+     * point 4:
+     * indicatorCoords[3][0] = separation;
+     * indicatorCoords[3][1] = getHeight() / 2;
+     * point 5:
+     * indicatorCoords[4][0] = getWidth() - separation;
+     * indicatorCoords[4][1] = getHeight() / 2;
+     * point 6:
+     * indicatorCoords[5][0] = separation;
+     * indicatorCoords[5][1] = getHeight() - separation;
+     * point 7:
+     * indicatorCoords[6][0] = getWidth() - separation;
+     * indicatorCoords[6][1] = getHeight() - separation;
      */
-    private void setCoordinates() {
-        // point 1
-        indicatorCoords[0][0] = separation;
-        indicatorCoords[0][1] = separation;
-        // point 5
-        indicatorCoords[1][0] = getWidth() - separation;
-        indicatorCoords[1][1] = getHeight() / 2;
+    private void setCoordinates(String selectedHand) {
+        if (selectedHand.equals(LoggingActivity.RIGHT_HAND)) {
+            // points 3 and 4
+            indicatorCoords[0][0] = getWidth() - separation;
+            indicatorCoords[0][1] = separation;
+
+            indicatorCoords[1][0] = separation;
+            indicatorCoords[1][1] = getHeight() / 2;
+        } else {
+            // points 1 and 5
+            indicatorCoords[0][0] = separation;
+            indicatorCoords[0][1] = separation;
+
+            indicatorCoords[1][0] = getWidth() - separation;
+            indicatorCoords[1][1] = getHeight() / 2;
+        }
     }
 }

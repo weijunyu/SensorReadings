@@ -30,13 +30,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        style="?android:attr/buttonBarStyle">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start_logging_5p"
             android:id="@+id/start_logging_5p"
+            style="?android:attr/buttonBarButtonStyle"
             android:onClick="startLoggingActivity5P"/>
 
         <Button
@@ -44,8 +46,16 @@
             android:layout_height="wrap_content"
             android:text="@string/start_logging_2p"
             android:id="@+id/start_logging_2p"
+            style="?android:attr/buttonBarButtonStyle"
             android:onClick="startLoggingActivity2P"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/continuous_mode_text"
+        android:id="@+id/continuous_mode_text"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>

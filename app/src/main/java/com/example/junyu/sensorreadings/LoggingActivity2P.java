@@ -23,12 +23,6 @@ public class LoggingActivity2P extends LoggingActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        setLogNumber();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         stopLogging();
@@ -38,10 +32,11 @@ public class LoggingActivity2P extends LoggingActivity {
         // Find the linear accelerometer directory
         if (isExternalStorageWritable()) {
             int logNum;
+            String handDir = "/" + selectedHand; // eg '/left_hand'
             File logDir = new File(
                     Environment.getExternalStorageDirectory() +
-                            mainLogDir + "/2_points");
-            // eg: '/storage/emulated/0' + '/SensorReadings/logs' + '/2_points'
+                            mainLogDir + "/2_points" + handDir);
+            // eg: '/storage/emulated/0' + '/SensorReadings/logs' + '/2_points' + '/left_hand'
             linAccLogDir = new File(logDir + linAccDirName);
             gyroLogDir = new File(logDir + gyroDirName);
             // '/storage/emulated/0' + '/SensorReadings/logs' + '/gyro'
@@ -96,11 +91,12 @@ public class LoggingActivity2P extends LoggingActivity {
 //        registerLinAccReceiver();
 //        startGyroBroadcast();
 //        registerGyroReceiver();
+            setLogNumber();
             startListening();
 
             // Add TapView to layout
             ViewGroup loggingLayout = (ViewGroup) this.findViewById(R.id.logging_activity);
-            TapView2P tapView = new TapView2P(this);
+            TapView2P tapView = new TapView2P(this, selectedHand);
             loggingLayout.addView(tapView);
         } else {
             Toast.makeText(this, "Please select which hand you are using to hold the phone first",
