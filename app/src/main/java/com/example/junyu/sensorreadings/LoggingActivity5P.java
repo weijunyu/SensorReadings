@@ -15,6 +15,7 @@ import java.util.List;
 
 public class LoggingActivity5P extends LoggingActivity {
     private static final String LOG_TAG = "LoggingActivity(5P)";
+    private static final String noOfPointsDir = "/5_points";
 //    private Intent aware;
 
     @Override
@@ -33,11 +34,10 @@ public class LoggingActivity5P extends LoggingActivity {
         // Find the linear accelerometer directory
         if (isExternalStorageWritable()) {
             int logNum;
-            String handDir = "/" + selectedHand; // eg '/left_hand'
             File logDir = new File(
                     Environment.getExternalStorageDirectory() +
-                            mainLogDir + "/5_points" + handDir);
-            // eg: '/storage/emulated/0' + '/SensorReadings/logs' + '/5_points'
+                            mainLogDir + noOfPointsDir + handDir);
+            // eg: '/storage/emulated/0' + '/SensorReadings/logs' + '/5_points' + 'left_hand'
             linAccLogDir = new File(logDir + linAccDirName);
             gyroLogDir = new File(logDir + gyroDirName);
 

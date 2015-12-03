@@ -15,6 +15,7 @@ import java.util.List;
 
 public class LoggingActivity2P extends LoggingActivity {
     private static final String LOG_TAG ="LoggingActivity(2P)";
+    private static final String noOfPointsDir = "/2_points";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +33,9 @@ public class LoggingActivity2P extends LoggingActivity {
         // Find the linear accelerometer directory
         if (isExternalStorageWritable()) {
             int logNum;
-            String handDir = "/" + selectedHand; // eg '/left_hand'
             File logDir = new File(
                     Environment.getExternalStorageDirectory() +
-                            mainLogDir + "/2_points" + handDir);
+                            mainLogDir + noOfPointsDir + handDir);
             // eg: '/storage/emulated/0' + '/SensorReadings/logs' + '/2_points' + '/left_hand'
             linAccLogDir = new File(logDir + linAccDirName);
             gyroLogDir = new File(logDir + gyroDirName);

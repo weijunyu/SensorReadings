@@ -45,6 +45,7 @@ public abstract class LoggingActivity extends AppCompatActivity {
     protected File linAccLogDir;
     protected File gyroLogDir;
     protected String mainLogDir = "/SensorReadings/logs";
+    protected String handDir;
     protected String linAccDirName = "/lin_acc";
     protected String gyroDirName = "/gyro";
     protected String linAccLogFileName;
@@ -78,11 +79,13 @@ public abstract class LoggingActivity extends AppCompatActivity {
             case R.id.radio_left_hand:
                 if (checked) {
                     selectedHand = LEFT_HAND;
+                    handDir = "/" + selectedHand;
                 }
                 break;
             case R.id.radio_right_hand:
                 if (checked) {
                     selectedHand = RIGHT_HAND;
+                    handDir = "/" + selectedHand;
                 }
                 break;
             default:
@@ -122,23 +125,21 @@ public abstract class LoggingActivity extends AppCompatActivity {
             public void onSensorChanged(SensorEvent event) {
                 Sensor sensor = event.sensor;
                 if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-                    String hand = selectedHand;
                     double xValue = event.values[0];
                     double yValue = event.values[1];
                     double zValue = event.values[2];
                     Calendar calendar = new GregorianCalendar();
                     long timeStamp = calendar.getTimeInMillis();
-                    String logLine = hand + "," + timeStamp + "," + indicatorNum + "," +
+                    String logLine = timeStamp + "," + indicatorNum + "," +
                             xValue + "," + yValue + "," + zValue;
                     appendLog(logLine, Sensor.TYPE_LINEAR_ACCELERATION);
                 } else if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-                    String hand = selectedHand;
                     double xValue = event.values[0];
                     double yValue = event.values[1];
                     double zValue = event.values[2];
                     Calendar calendar = new GregorianCalendar();
                     long timeStamp = calendar.getTimeInMillis();
-                    String logLine = hand + "," + timeStamp + "," + indicatorNum + "," +
+                    String logLine = timeStamp + "," + indicatorNum + "," +
                             xValue + "," + yValue + "," + zValue;
                     appendLog(logLine, Sensor.TYPE_GYROSCOPE);
                 }
@@ -149,6 +150,7 @@ public abstract class LoggingActivity extends AppCompatActivity {
 
             }
         };
+        // delay_game is 20ms (50hz), delay_normal is 200ms (5hz), delay_ui is 60ms (16.7hz)
         sensorManager.registerListener(sensorListener, linearAccelerometer, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(sensorListener, gyroscope, SensorManager.SENSOR_DELAY_GAME);
     }
