@@ -165,7 +165,7 @@ public abstract class LoggingActivity extends AppCompatActivity {
                     bufferedWriter.append(logLine);
                     bufferedWriter.newLine();
                     bufferedWriter.close();
-                    Log.d(LOG_TAG, "Wrote log to: " + logFile.getAbsolutePath());
+//                    Log.d(LOG_TAG, "Wrote log to: " + logFile.getAbsolutePath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -177,7 +177,7 @@ public abstract class LoggingActivity extends AppCompatActivity {
                     bufferedWriter.append(logLine);
                     bufferedWriter.newLine();
                     bufferedWriter.close();
-                    Log.d(LOG_TAG, "Wrote log to: " + logFile.getAbsolutePath());
+//                    Log.d(LOG_TAG, "Wrote log to: " + logFile.getAbsolutePath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -292,7 +292,7 @@ public abstract class LoggingActivity extends AppCompatActivity {
                         Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_1);
                 double zValue = content.getAsDouble(
                         Linear_Accelerometer_Provider.Linear_Accelerometer_Data.VALUES_2);
-                Log.d(LOG_TAG, "Logging linear accelerometer content!");
+//                Log.d(LOG_TAG, "Logging linear accelerometer content!");
                 // This should be correct:
                 // TextView sensorValues = (TextView) LoggingActivity5p.this.findViewById(R.id.sensor_values);
                 // sensorValues.setText(xValue + ", " + yValue + ", " + zValue);
@@ -317,7 +317,7 @@ public abstract class LoggingActivity extends AppCompatActivity {
                 double xValue = content.getAsDouble(Gyroscope_Provider.Gyroscope_Data.VALUES_0);
                 double yValue = content.getAsDouble(Gyroscope_Provider.Gyroscope_Data.VALUES_1);
                 double zValue = content.getAsDouble(Gyroscope_Provider.Gyroscope_Data.VALUES_2);
-                Log.d(LOG_TAG, "Logging gyroscope content!");
+//                Log.d(LOG_TAG, "Logging gyroscope content!");
                 // This should be correct:
                 // TextView sensorValues = (TextView) LoggingActivity5p.this.findViewById(R.id.gyro_values);
                 // sensorValues.setText(xValue + ", " + yValue + ", " + zValue);
