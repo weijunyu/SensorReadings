@@ -283,7 +283,8 @@ public abstract class LoggingActivity extends AppCompatActivity {
             Object accData = intent.getExtras().get(LinearAccelerometer.EXTRA_DATA);
             ContentValues content = (ContentValues) accData;
             if (content != null) {
-                String label = content.getAsString(Gyroscope_Provider.Gyroscope_Data.LABEL);
+                String label = content.getAsString(
+                        Linear_Accelerometer_Provider.Linear_Accelerometer_Data.LABEL);
                 int timeStamp = content.getAsInteger(
                         Linear_Accelerometer_Provider.Linear_Accelerometer_Data.TIMESTAMP);
                 double xValue = content.getAsDouble(
