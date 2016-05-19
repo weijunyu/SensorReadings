@@ -170,11 +170,21 @@ public class TapView5P extends View {
             // point 1
             indicatorCoords[2][0] = separation;
             indicatorCoords[2][1] = separation;
-            // point 4
-            indicatorCoords[3][0] = separation;
-            indicatorCoords[3][1] = getHeight() / 2;
+
+//            // To capture left and right taps, use point 4 and 6
+//            // point 4
+//            indicatorCoords[3][0] = separation;
+//            indicatorCoords[3][1] = getHeight() / 2;
+//            // point 6
+//            indicatorCoords[4][0] = separation;
+//            indicatorCoords[4][1] = getHeight() - separation;
+
+            // To capture bottom taps, use point 6 and 8
             // point 6
-            indicatorCoords[4][0] = separation;
+            indicatorCoords[3][0] = separation;
+            indicatorCoords[3][1] = getHeight() - separation;
+            // point 8
+            indicatorCoords[4][0] = getWidth() / 2;
             indicatorCoords[4][1] = getHeight() - separation;
         } else {
             // point 1
@@ -186,11 +196,21 @@ public class TapView5P extends View {
             // point 3
             indicatorCoords[2][0] = getWidth() - separation;
             indicatorCoords[2][1] = separation;
-            // point 5
-            indicatorCoords[3][0] = getWidth() - separation;
-            indicatorCoords[3][1] = getHeight() / 2;
+
+//            // To capture left and right taps, use point 5 and 7
+//            // point 5
+//            indicatorCoords[3][0] = getWidth() - separation;
+//            indicatorCoords[3][1] = getHeight() / 2;
+//            // point 7
+//            indicatorCoords[4][0] = getWidth() - separation;
+//            indicatorCoords[4][1] = getHeight() - separation;
+
+            // To capture bottom taps, use point 7 and 8
             // point 7
-            indicatorCoords[4][0] = getWidth() - separation;
+            indicatorCoords[3][0] = getWidth() - separation;
+            indicatorCoords[3][1] = getHeight() - separation;
+            // point 8
+            indicatorCoords[4][0] = getWidth() / 2;
             indicatorCoords[4][1] = getHeight() - separation;
         }
     }

@@ -16,19 +16,6 @@ import java.util.List;
 public class LoggingActivity5P extends LoggingActivity {
     private static final String LOG_TAG = "LoggingActivity(5P)";
     private static final String noOfPointsDir = "/5_points";
-//    private Intent aware;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logging);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        stopLogging();
-    }
 
     protected void setLogNumber() {
         // Find the linear accelerometer directory
@@ -45,7 +32,7 @@ public class LoggingActivity5P extends LoggingActivity {
                     logDir.mkdirs(),
                     linAccLogDir.mkdirs(),
                     gyroLogDir.mkdirs()
-            }; // create directors if they don't exist
+            }; // create directories if they don't exist
             if (success[0] || success[1] || success[2]) {
                 Log.d(LOG_TAG, "Log directories created.");
             } else {

@@ -17,18 +17,6 @@ public class LoggingActivity2P extends LoggingActivity {
     private static final String LOG_TAG ="LoggingActivity(2P)";
     private static final String noOfPointsDir = "/2_points";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logging);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        stopLogging();
-    }
-
     protected void setLogNumber() {
         // Find the linear accelerometer directory
         if (isExternalStorageWritable()) {
@@ -45,7 +33,7 @@ public class LoggingActivity2P extends LoggingActivity {
                     logDir.mkdirs(),
                     linAccLogDir.mkdirs(),
                     gyroLogDir.mkdirs()
-            }; // create directors if they don't exist
+            }; // create directories if they don't exist
             if (success[0] || success[1] || success[2]) {
                 Log.d(LOG_TAG, "Log directories created.");
             } else {

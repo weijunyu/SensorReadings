@@ -9,6 +9,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -72,25 +73,16 @@ public abstract class LoggingActivity extends AppCompatActivity {
      */
 //    abstract void startListening();
 
-    public void selectHand(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_logging);
+    }
 
-        switch (view.getId()) {
-            case R.id.radio_left_hand:
-                if (checked) {
-                    selectedHand = LEFT_HAND;
-                    handDir = "/" + selectedHand;
-                }
-                break;
-            case R.id.radio_right_hand:
-                if (checked) {
-                    selectedHand = RIGHT_HAND;
-                    handDir = "/" + selectedHand;
-                }
-                break;
-            default:
-                break;
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopLogging();
     }
 
     protected boolean checkHandSelected() {
@@ -109,9 +101,9 @@ public abstract class LoggingActivity extends AppCompatActivity {
     protected void hideExplanationAndButton() {
         // Remove text and button
         TextView loggingExplanation = (TextView) findViewById(R.id.logging_explanation);
-        Button beginLogging = (Button) findViewById(R.id.begin_logging);
+        Button beginLoggingButton = (Button) findViewById(R.id.begin_logging);
         loggingExplanation.setVisibility(View.GONE);
-        beginLogging.setVisibility(View.GONE);
+        beginLoggingButton.setVisibility(View.GONE);
     }
 
     protected void startListening() {
