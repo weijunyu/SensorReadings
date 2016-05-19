@@ -85,6 +85,27 @@ public abstract class LoggingActivity extends AppCompatActivity {
         stopLogging();
     }
 
+    public void selectHand(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch (view.getId()) {
+            case R.id.radio_left_hand:
+                if (checked) {
+                    selectedHand = LEFT_HAND;
+                    handDir = "/" + selectedHand;
+                }
+                break;
+            case R.id.radio_right_hand:
+                if (checked) {
+                    selectedHand = RIGHT_HAND;
+                    handDir = "/" + selectedHand;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     protected boolean checkHandSelected() {
         // Check if hand is selected
         RadioButton radioLeftHand = (RadioButton) findViewById(R.id.radio_left_hand);
