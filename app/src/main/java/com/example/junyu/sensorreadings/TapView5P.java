@@ -134,7 +134,7 @@ public class TapView5P extends View {
     /**
      Locations of the 7 tap points on the display. Points are numbered 1-7, and go left-right,
      top-down. First array element is x position, second element is y position.
-     point 1:
+     point 1: (top left of phone)
      indicatorCoords[0][0] = separation;
      indicatorCoords[0][1] = separation;
      point 2:
@@ -143,18 +143,21 @@ public class TapView5P extends View {
      point 3:
      indicatorCoords[2][0] = getWidth() - separation;
      indicatorCoords[2][1] = separation;
-     point 4:
+     point 4: (left of phone)
      indicatorCoords[3][0] = separation;
      indicatorCoords[3][1] = getHeight() / 2;
      point 5:
      indicatorCoords[4][0] = getWidth() - separation;
      indicatorCoords[4][1] = getHeight() / 2;
-     point 6:
+     point 6: (bottom left of phone)
      indicatorCoords[5][0] = separation;
      indicatorCoords[5][1] = getHeight() - separation;
      point 7:
      indicatorCoords[6][0] = getWidth() - separation;
      indicatorCoords[6][1] = getHeight() - separation;
+     point 8: (bottom of phone)
+     indicatorCoords[0][0] = getWidth() / 2;
+     indicatorCoords[0][1] = getHeight() - separation;
      */
     private void setCoordinates(String selectedHand) {
         if (selectedHand.equals(LoggingActivity.RIGHT_HAND)) {
